@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:profile_update/HomeScreen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -17,6 +18,7 @@ class _LoginScreenState extends State<LoginScreen> {
   double screenHeight = 0;
   double screenWidth = 0;
   Color primary =  const Color(0xffeef44c);
+  late SharedPreferences sharedPreferences;
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +90,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       try{
                         if(password == snap.docs[0]['password']){
-                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> HomeScreen()));
+                          sharedPreferences = await SharedPreferences.getInstance();
+                          sharedPreferences.setString('employeeId', id).then((_) {
+                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> HomeScreen()));
+                          });
                         }else{
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Password is not correct!")));
                         }
