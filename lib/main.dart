@@ -5,6 +5,8 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'model/user.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -18,7 +20,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Employee Attendance',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -52,6 +54,7 @@ class _AuthCheckState extends State<AuthCheck> {
     try{
       if(sharedPreferences.getString('employee') != null){
         setState(() {
+          User.username = sharedPreferences.getString('employee')!;
           userAvailable = true;
         });
       }
@@ -63,7 +66,7 @@ class _AuthCheckState extends State<AuthCheck> {
   }
   @override
   Widget build(BuildContext context) {
-    return userAvailable ? HomeScreen() : LoginScreen();
+    return userAvailable ? const HomeScreen() : const LoginScreen();
   }
 }
 
