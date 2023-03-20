@@ -1,8 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:profile_update/CalenderdarScreen.dart';
 import 'package:profile_update/ProfileScreen.dart';
 import 'package:profile_update/TodayScreen.dart';
+
+import 'model/user.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -14,6 +17,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   double screenHeight = 0;
   double screenWidth = 0;
+
   Color primary =  const Color(0xffeef44c);
 
   int currentIndex = 1;
@@ -23,6 +27,21 @@ class _HomeScreenState extends State<HomeScreen> {
     FontAwesomeIcons.check,
     FontAwesomeIcons.user,
   ];
+
+  @override
+  void initState() {
+    super.initState();
+
+    getId();
+  }
+
+  void getId() async {
+    QuerySnapshot snap = await FirebaseFirestore.instance.collection("Employee").where('id', isEqualTo: User.employee).get();
+
+    setState(() {
+      User.id = snap.docs[0].id;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

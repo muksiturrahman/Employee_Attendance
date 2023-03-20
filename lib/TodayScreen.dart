@@ -32,7 +32,7 @@ class _TodayScreenState extends State<TodayScreen> {
     try{
       QuerySnapshot snap = await FirebaseFirestore.instance
           .collection("Employee")
-          .where('id', isEqualTo: User.username)
+          .where('id', isEqualTo: User.employee)
           .get();
 
 
@@ -77,7 +77,7 @@ class _TodayScreenState extends State<TodayScreen> {
           Container(
               alignment: Alignment.centerLeft,
               child: Text(
-                "Employee" + User.username,
+                "Employee${User.employee}",
                 style: TextStyle(
                 fontFamily: "NexaBold",
                 fontSize: screenWidth/18,
@@ -209,7 +209,7 @@ class _TodayScreenState extends State<TodayScreen> {
                       });
                       QuerySnapshot snap = await FirebaseFirestore.instance
                       .collection("Employee")
-                      .where('id', isEqualTo: User.username)
+                      .where('id', isEqualTo: User.employee)
                       .get();
 
 
@@ -247,7 +247,7 @@ class _TodayScreenState extends State<TodayScreen> {
                             DateFormat('dd MMMM yyyy').format(DateTime.now()))
                             .set({
                           'checkIn': DateFormat('hh:mm').format(DateTime.now()),
-
+                          'checkOut': "--/--",
                         });
                       }
                     },
