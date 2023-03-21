@@ -58,8 +58,8 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 ),
               ],
             ),
-            Container(
-              height: screenHeight - screenHeight /5,
+            SizedBox(
+              height: screenHeight / 1.5,
               child: StreamBuilder<QuerySnapshot>(
                 stream: FirebaseFirestore.instance.collection("Employee").doc(User.id).collection("Record").snapshots(),
             builder: (BuildContext context, AsyncSnapshot<QuerySnapshot>snapshot){
@@ -86,6 +86,20 @@ class _CalendarScreenState extends State<CalendarScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
+                              Expanded(
+                                child: Container(
+                                  margin: EdgeInsets.only(),
+                                  decoration: BoxDecoration(
+                                    color: primary,
+                                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      snap[index].id,
+                                    ),
+                                  ),
+                                ),
+                              ),
                               Expanded(
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
